@@ -9,7 +9,7 @@
 
 ## 模拟检测器
 
-### 1. Inductive loops detetors(E1)
+### 1. Inductive loops detetors (E1)
 
 设置在**断面**的检测器，具体到特定车道(lane)的具体位置(pos)
 
@@ -24,6 +24,8 @@
 |nVehEntered|接触过检测器的车辆数|
 
 车辆检测器一般只对**完全穿越检测器**的车辆进行数据采集和计算，因此换道车辆可能不会被计入。
+
+traci提供调用支持。
 
 ### 2. Instantaneous induction loops detectors
 
@@ -47,9 +49,44 @@
 
 traci不支持Instantaneous induct loops。当使用traci时，可以每秒使用Induction loops作为代替。
 
-### 3. Lanearea detectors
+### 3. Lanearea detectors (E2)
 
-**路段**级别的检测器,可以采集车道特定长度上的数据。
+**车道**级别的检测器,可以采集车道特定长度上的数据。
 
 主要用来评估拥堵、排队长度等。
 
+可以输出的主要指标：
+| 变量名 | 描述 |
+|--|--|
+|sampledSeconds|采集时间内对每秒在车道上的车辆加和，即采集样本数|
+|nVehEntered|进入检测器的车辆数|
+|nVehLeft|离开检测器的车辆数|
+|nVehSeen|检测器观察到的车辆数|
+|meanSpeed|平均速度(实际为空间平均车速)，单位m/s|
+|meanOccupancy|平均空间占有率，0-100%|
+|maxJamLengthInVehicles|最大拥堵长度，以车辆数为单位|
+|meanHaltingDuration|平均等待时间|
+|meanVehicleNumber|检测器观察到的平均车辆数|
+
+traci提供调用支持。
+
+### 4. Multi-Entry-Exit Detectors (E3)
+
+利用一系列Entry和Exit描述的检测器。
+
+可以输出的主要指标：
+| 变量名 | 描述 |
+|--|--|
+|meanTravelTime|车辆穿越区域所需时间(车辆前身进入区域)|
+|meanSpeed|平均车速(实际为空间平均车速)，单位m/s|
+|meanHaltsPerVehicle|已穿越检测区域车辆的平均等待时间|
+|meanTimeLoss|已穿越检测区域车辆的平均时间损失|
+|vehicleSum|已离开检测区域的车辆总数|
+
+路径完全包含在检测区域中的车辆不会被计入检测样本中。
+
+traci提供调用支持。
+
+### 5. RouteProbe
+
+定义在edge上的检测器，用来检测路径分布。
